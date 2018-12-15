@@ -1,0 +1,159 @@
+Into to Clean Coding Answers
+
+1. In your own words, explain what clean code is and why it is important.
+
+Clean code is code written with readability and reusability in mind. It is important to ensure that other developers can easily understand and work with your code. It also makes it easier to debug or refactor because you don't have to spend too much time trying to understand what you first wrote.
+
+2. Read this article about Toyota and their use of bad code. Although you may not yet understand all of the topics discussed, think about another commonly used object that relies on computers and explain what would happen if the code was not created to an acceptable standard.
+
+This could be catastrophic in so many instances, but security on digital accounts is the main thing that comes to mind. If the code to secure an email account, for example, is not written well to handle a variety of attacks or if someone needs to reaccess their account, then personal information could be lost or compromised.
+
+3. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+I would not consider it to be clean code because if has an overabundance of comments. Some of them are self-evident, and some of them are used because the variables are not well-named. The generic variables make it hard to understand what the function is intended for. I removed the unnecessary comments and renamed the variables and function to be more semantic. I also improved the nesting.
+
+
+FUNCTION setTemperature(measurement, type)
+ IF type = "F" THEN
+  SET temperature to (measurement−32) * (5/9)       // Formula to convert degrees fahrenheit to celsius
+  PRINT temperature
+ ELSE IF type = "C" THEN
+  SET temperature to measurement * 1.8000 + 32.00   // Formula to convert degrees celsius to fahrenheit
+  PRINT temperature
+ END IF
+END FUNCTION
+
+
+4. Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+IT is not clean code because of the abbreviated function name, misplaced PRINT statement, and visually off nesting (squint test). I changed the function name to not use abbreviations. I also fixed the extra indentations for better nesting, and moved a PRINT statement to within the conditional so it would only print the percentage if it is able to calculate it.
+
+FUNCTION calculatePercentage(sum, total)
+ IF NOT(total = 0) THEN
+   SET percentage to sum / total * 100
+   PRINT percentage
+ ELSE
+   PRINT "Sorry, cannot divide by 0"
+ END IF
+END FUNCTION
+
+
+5. Using pseudocode, refactor the code for the following examples using the principles you have learned in this checkpoint.
+
+a. The following function prints the subtotal of a customer's transaction and receives payment accordingly.
+
+INIT taxRate to 0.825
+FUNCTION getTotal(subTotal, discountRate)
+  INIT discountSubTotal equals subTotal - (subTotal * discountRate)
+  INIT total equals discountSubTotal + (discountSubTotal * taxRate)
+  PRINT "Your total due is: $" + total
+  RETURN total
+END FUNCTION
+
+FUNCTION getPayment(paymentType, amount)
+   IF paymentType = "CASH" THEN
+       CALL getTotal RETURNING total
+       PRINT "Change due: " + (amount - total)
+   ELSE IF paymentType = "CARD" THEN
+       CALL getTotal RETURNING total
+       PRINT "Your credit card has been charged: " + total
+   END IF
+END FUNCTION
+
+
+b. The following function checks out a book if there are no issues with the guest's account.
+
+FUNCTION checkOutBook(book, guest)
+ IF guest.accountActive AND NOT(guest.hasOverdueBooks) AND guest.outstandingFees equals 0 AND book.status equals "Checked In" THEN
+    APPEND book to guest.books
+    SET book.status to "Checked Out"
+    PRINT "Your books have been issued."
+ ELSE
+     PRINT "Unable to check out book."
+ END IF
+END FUNCTION
+
+
+c. The following class is a code snippet that should support the transactions a customer can perform at an ATM.
+
+CLASS BankAccount
+
+ FUNCTION displayBalance
+    PRINT balance
+ END FUNCTION
+
+ FUNCTION deposit(amount)
+    SET balance to balance + amount
+ END FUNCTION
+
+ FUNCTION withdraw(amount)
+     IF balance >= amount THEN
+       SET balance to balance - amount
+     ELSE
+       PRINT "There is not enough in your account."
+     END IF
+ END FUNCTION
+
+ FUNCTION getCreditCardOffer
+     IF NOT(customer.hasCreditCard) THEN
+       CALL offerCreditCard
+     ELSE
+      PRINT "You already have a credit card with this bank."
+     END IF
+ END FUNCTION
+
+ FUNCTION getCheckingAccount
+     IF NOT(customer.hasCheckingAccount) THEN
+       CALL offerCheckingAccount
+     END IF
+ END FUNCTION
+
+END
+
+
+6. Square: Given an array of integers, find out whether the sum of the integers is a perfect square. If it is a perfect square, return the square root, otherwise return the sum.
+
+Example:
+[10,1,4,6,1,1,2] returns 5 because the square root of 25 is 5.
+[1,1] returns 2 because 2 is not a perfect square.
+The square root of 2 is approximately 1.414213562373095.
+
+
+function testPerfectSquare(integers){
+  let sum = integers.reduce( (total, number) => total + number);
+  let squareRoot = Math.sqrt(sum);
+  if(squareRoot % 1 == 0){
+    return squareRoot;
+  } else {
+    return sum;
+  }
+}
+
+
+7. Duplicate: Given an array of integers, find out whether the array contains any duplicate elements. The function should return true if any value appears at least twice in the array, and false if every element is distinct.
+
+function checkForDuplicates(integers) {
+    let duplicates = [];
+    for (var x = 0; x < integers.length; x++) {
+        let integer = integers[x];
+        if (duplicates.indexOf(integer) !== -1) {
+            return true;
+        }
+        duplicates.push(integer);
+    }
+    return false;
+}
+
+
+Extra Credit:
+8. Anagram: An anagram is a word, phrase, or name formed by rearranging the letters of another word. For example, spar can be formed from rasp. Given two strings, stringOne and stringTwo, determine if stringOne is an anagram of stringTwo. Assume that the strings contain only lowercase letters and do not worry about case-sensitivity. Hint: Your first task will be to convert the strings to arrays.
+
+function findAnagram(stringOne, stringTwo){
+ let sortedStringOne = stringOne.split("").sort().join("");
+ let sortedStringTwo = stringTwo.split("").sort().join("");
+ if(sortedStringOne === sortedStringTwo){
+  return true;
+ } else {
+  return false;
+ }
+}
