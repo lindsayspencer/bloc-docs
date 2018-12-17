@@ -1,0 +1,59 @@
+Intro to Data Structures
+
+1. A line of people at an amusement park ride.
+
+member = string
+front and back of the line
+when someone enters, they go at the end (entersLine)
+people can leave whenever, which moves up those behind them (leavesLine)
+use array data structure
+
+
+function updateLine(){
+  let members = ["Vivian", "Ava", "Josh", "Patrick", "Mike"];
+  members.push("Mary"); // Mary enters line
+  console.log(members.indexOf("Josh")); // find Josh in line
+  if(members.find( (member) => member === "Emily" )){
+    console.log(members.indexOf("Emily"));
+  } else {
+    console.log("Emily is not in line.");
+  }
+  members.splice(members.indexOf("Ava"), 0, "Melissa") // let Melissa cut in line
+  members.splice(members.indexOf("Patrick"), 1) // Patrick leaves line
+  return members;
+}
+
+// 2, "There is no Emily in line", ["Vivian", "Melissa", "Ava", "Josh", "Mike", "Mary"]
+
+
+2. Provide another real-world example that you can model using a data structure.
+
+Organizing a database of library books, which allows for checking in books, checking out books, removing lost books, adding purchased books, and searching for books for patrons.
+
+Scenario:
+- Fahrenheit 451 is checked out
+- Wuthering Heights by Emily Bronte is returned
+- A patron is looking for Lord of the Flies
+
+
+function organizeBooks(){
+  let books = [{title: "Persuasion", author: "Austen, Jane"}, {title: "Fahrenheit 451", author: "Bradbury, Ray"}, {title: "1984", author: "Orwell, George"}];
+  books.splice(books.findIndex( (book) => book.title === "Fahrenheit 451"), 1); // Fahrenheit 451 is checked out
+  books.splice(books.findIndex( (book) => book.title === "1984"), 0, {title: "Wuthering Heights", author: "Bronte, Emily"}); // Wuthering Heights is returned
+  if(books.findIndex( (book) => book.title === "Lord of the Flies") !== -1){
+    console.log(books.findIndex( (book) => book.title === "Lord of the Flies"));
+  } else {
+    console.log("We do not have Lord of the Flies.");
+  }
+  return books;
+}
+
+
+
+3. How would your data structure allow developers to access and manipulate data?
+
+- Each book is an object with the properties title and author
+- books are first ordered by last name of author, then by title
+- when a book is checked out or lost, it is removed from the inventory list by finding the index of the book object with that title
+- when a book is checked in or purchased, it is added to the inventory list
+- when a book is requested, it can be searched for by attempting to find the index of the book object with that title
