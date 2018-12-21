@@ -1,0 +1,73 @@
+Linked Lists Answers
+
+1. What are some pros and cons of using linked lists instead of arrays?
+
+2. Come up with a real world example of a linked list.
+
+
+Programming Qs
+
+First, write out a plan explaining how to solve the question.
+
+1. The linked list push function should take a value, create a node, and add it to the end of a list. Below is pseudocode for a push function for a singly linked list. However, there is something wrong with it. Submit both an explanation of the bug and a functional implementation of the method.
+
+// Features: new nodes go at the end of the list, so they will point to null; the head is always at the top of the list, and is set at the time of the first push;
+
+// Original
+
+FUNCTION push(element)
+  CREATE node
+  SET node.value TO element
+  SET node.next TO null
+
+  IF the head node does not exist THEN
+    SET head to node
+  ELSE
+    SET current to head
+    SET current.next to node
+  END IF
+END FUNCTION
+
+// Fixed?
+
+FUNCTION push(element)
+  CREATE node
+  SET node.value TO element
+  SET node.next TO null
+
+  IF the head node does not exist THEN
+    SET head to node
+  ELSE
+    SET current to head // I think this shouldn't be here, because then it's always setting the current to being the head of the list...
+    SET current.next to node // this makes sense...
+  END IF
+  // set current to node at the end, so the last one is always the current one?
+  // return current
+END FUNCTION
+
+// Bug
+
+
+
+2. Given an unsorted singly linked list, remove all duplicates from the linked list.
+Example
+Input: a -> c -> d -> d -> a
+Output: a -> c -> d
+
+// use a while loop. Remove one node only if a condition is met.
+
+SET head to testNode
+  IF data of testNode is equal the data of node THEN
+    REMOVE node
+  ELSE
+    SET testNode to head.next
+
+
+3. Given an unsorted singly linked list, reverse it.
+Example
+Input: a -> b -> c -> d
+Output: d -> c -> b -> a
+
+function reverseList(list){
+
+}

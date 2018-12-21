@@ -40,8 +40,10 @@ END WHILE
 INPUT phonebook
 INPUT target entry
 FOR each entry in phonebook
-  IF entry is equal to target entry
-  RETURN true
+  IF entry is equal to target entry THEN
+    RETURN true
+  ELSE
+    RETURN false
 END IF
 
 
@@ -60,5 +62,6 @@ function search(phonebook, target){
       return true;
     }
  }
+  return false;
 }
 search(phonebook, target);
