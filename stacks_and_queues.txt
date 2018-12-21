@@ -72,9 +72,9 @@ class StringStack {
   pop(){
     if(this.characters.length === 0){
       return "Error: empty stack";
+    } else {
+      this.characters.pop();
     }
-    console.log(this.characters[this.characters.length - 1]);
-    this.characters.splice(this.characters.length - 1 , 1);
   }
   printStack(){
     return this.characters.join("");
@@ -91,6 +91,38 @@ class StringStack {
 
 2. Implement the pop method of a stack using one queue. Make a FIFO data structure mirror the functionality of a LIFO data structure. Since the internal list is not the same as defined in the checkpoint, it may help to rewrite the pseudocode first.
 
+FUNCTION dequeue
+  SET temp to the last element
+  REMOVE LAST element of list from list
+  RETURN temp
+END FUNCTION
+
+class QueuedRequests {
+  constructor(){
+    this.requests = [];
+  }
+  dequeue(){
+    if(this.requests.length === 0){
+      return "Error: empty queue";
+    }
+    let temp = this.requests[this.requests.length - 1];
+    this.requests.splice(this.requests.length - 1 , 1);
+    return temp;
+  }
+  enqueue(request){
+    this.requests.push(request);
+  }
+  call(){
+    if(this.requests.length === 0){
+      return "Error: empty queue";
+    }
+    return this.requests[0];
+  }
+  printList(){
+    return this.requests;
+  }
+}
+
 
 ...
 
@@ -98,3 +130,30 @@ To delete an item...
 
 
 1. Implement the enqueue and dequeue methods defined in the checkpoint inside your own Queue class.
+
+FUNCTION enqueue(element)
+  APPEND element to the end of the list
+END FUNCTION
+
+FUNCTION dequeue
+  SET temp to the first element
+  REMOVE FIRST element of list from list
+  RETURN temp
+END FUNCTION
+
+class Queue {
+  constructor(){
+    this.items = [];
+  }
+  enqueue(item){
+    this.items.push(item);
+  }
+  dequeue(){
+    if(this.items.length === 0){
+      return "Error: empty list";
+    }
+    let temp = this.items[0];
+    this.items.splice(0 , 1);
+    return temp;
+  }
+}
