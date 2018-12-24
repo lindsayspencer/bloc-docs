@@ -2,7 +2,13 @@ Linked Lists Answers
 
 1. What are some pros and cons of using linked lists instead of arrays?
 
+Linked lists are more memory efficient than arrays, since the elements do not need to be contiguous (placed side by side). Their relationship is part of the element data, so they can be placed wherever there is already memory space instead of altering the space around any time something is changed in an array.
+
+The main con to using linked lists is the amount of time needed to search. Array elements can be found quickly by referencing a certain index, but linked lists can only be searched in order since the relationship only exists as data within each node. Each node or element will have to be viewed until the target is found. Linked list nodes also require more space because they contain more data than array elements due to the added pointer info.
+
 2. Come up with a real world example of a linked list.
+
+A real world example of a linked list might be a music playlist on shuffle. Once shuffled, the items are not placed in a particular order, but they do become linked by the music player, as you can use the next and previous buttons to go through the newly created list. You have a shuffled, unordered list based off of the original, ordered list.
 
 
 Programming Qs
@@ -10,8 +16,6 @@ Programming Qs
 First, write out a plan explaining how to solve the question.
 
 1. The linked list push function should take a value, create a node, and add it to the end of a list. Below is pseudocode for a push function for a singly linked list. However, there is something wrong with it. Submit both an explanation of the bug and a functional implementation of the method.
-
-// Features: new nodes go at the end of the list, so they will point to null; the head is always at the top of the list, and is set at the time of the first push;
 
 // Original
 
@@ -28,7 +32,7 @@ FUNCTION push(element)
   END IF
 END FUNCTION
 
-// Fixed?
+// Fixed
 
 FUNCTION push(element)
   CREATE node
@@ -37,37 +41,208 @@ FUNCTION push(element)
 
   IF the head node does not exist THEN
     SET head to node
+    SET current to head
   ELSE
-    SET current to head // I think this shouldn't be here, because then it's always setting the current to being the head of the list...
-    SET current.next to node // this makes sense...
+    SET current.next to node
+    SET current to node
   END IF
-  // set current to node at the end, so the last one is always the current one?
-  // return current
 END FUNCTION
 
-// Bug
+// Bug Explanation
+
+In the original pseudocode, the bug was occurring in the conditional. The current node was only being set if there were already items in the list, and it was always being set to the head node, which means new items would always be added towards the beginning of the list instead of the end of the list. I fixed it so that when the first item is added to the list, it is made both the head and the current node. Also, after the `else` statement, the `SET current.next to node` is fine, but it needed to be followed up with `SET current to node`, so that the new item at the end of the list becomes the current item.
 
 
+// Functional Implementation
+
+class Node {
+  constructor(value, next=null){
+    this.value = value;
+    this.next = next;
+  }
+}
+
+class LinkedList {
+  constructor(){
+    this.head = null;
+    this.current = null;
+    this.length = 0;
+  }
+  addNode(value){
+    let node = new Node(value);
+    if(!this.head){
+      this.head = node;
+      this.current = this.head;
+    } else {
+      this.current.next = node;
+      this.current = node;
+    }
+    this.length++;
+  }
+}
 
 2. Given an unsorted singly linked list, remove all duplicates from the linked list.
 Example
 Input: a -> c -> d -> d -> a
 Output: a -> c -> d
 
-// use a while loop. Remove one node only if a condition is met.
+// Explanation
 
-SET head to testNode
-  IF data of testNode is equal the data of node THEN
-    REMOVE node
+I need to save each node to test against each node in the list. If the next node value matches the value of the current node, it can be deleted. Both the test node and next nodes need to be incremented. I need to also make sure that the node is not testing against itself. If the current and next nodes are not equal and next.next is not equal to null, I need to increment next to next.next. To delete the duplicate node, I need to change the previous node's pointer to the current node's pointer.
+
+// Pseudocode
+
+IF this.head is equal to null OR this.head.next is equal to null
+  RETURN
+END IF
+SET current to this.head
+SET next to this.head.next
+WHILE current.next is not equal to null
+  IF current.value is equal to next.value
+    REMOVE next by setting current.next to next.next
   ELSE
-    SET testNode to head.next
+    SET current to next
+  END IF
+  SET next to next.next
+END WHILE
+
+// JavaScript
+
+class Node {
+  constructor(value, next=null, previous=null){
+    this.value = value;
+    this.next = next;
+    this.previous = previous;
+  }
+}
+
+class LinkedList {
+  constructor(){
+    this.head = null;
+    this.current = null;
+    this.length = 0;
+  }
+  addNode(value){
+    let node = new Node(value);
+    if(!this.head){
+      this.head = node;
+      this.current = this.head;
+    } else {
+      let temp = this.current;
+      temp.next = node;
+      node.previous = temp;
+      this.current = node;
+    }
+    this.length++;
+  }
+  removeDuplicates(){
+    if(!this.head || !this.head.next){
+      return "No duplicates found - empty or single element linked list";
+    }
+    let current;
+    let next;
+    let nodes = {};
+    current = this.head;
+    next = current.next;
+    nodes[current.value] = true;
+    while(next){
+      let data = next.value;
+      if(nodes[data]){
+        current.next = next.next;
+        this.length--;
+      } else {
+        nodes[data] = true;
+        current = next;
+      }
+      next = next.next;
+    }
+  }
+}
+
+let newList = new LinkedList;
+newList.addNode("item1");
+newList.addNode("item2");
+newList.addNode("item3");
+newList.removeDuplicates(); // no duplicates yet
+newList.addNode("item2"); // added a duplicate
+newList.removeDuplicates(); // new duplicate removed
+
+
 
 
 3. Given an unsorted singly linked list, reverse it.
 Example
-Input: a -> b -> c -> d
-Output: d -> c -> b -> a
+Input: a -> b -> c -> d -> null
+Output: d -> c -> b -> a -> null
 
-function reverseList(list){
+// Explanation
 
+I need to save the original next value, so I can still step forward in the list later. Then I need to change the pointer for the current item. The current item should then be saved to be the new pointer for the next node in the list. Then I need to step forward in the list by recalling the saved next value from earlier.
+
+// Pseudocode
+
+SET current to head
+SET newNext to null
+SET newPrevious to null
+WHILE current.next is not equal to null
+  newPrevious = current.next // save the original next value to step forward later
+  current.next = newNext // changing the pointer for the current value
+  current.previous = newPrevious // changing the 'head'
+  newNext = current // the current item is saved to be the newNext for the next current item
+  current = newPrevious // the current item is changed - use the earlier saved value to increment to the next item in the list
+END WHILE
+RETURN newNext
+END FUNCTION
+
+// JavaScript
+
+class Node {
+  constructor(value, next=null, previous=null){
+    this.value = value;
+    this.next = next;
+    this.previous = previous;
+  }
 }
+
+class LinkedList {
+  constructor(){
+    this.head = null;
+    this.current = null;
+    this.length = 0;
+  }
+  addNode(value){
+    let node = new Node(value);
+    if(!this.head){
+      this.head = node;
+      this.current = this.head;
+    } else {
+      let temp = this.current;
+      temp.next = node;
+      node.previous = temp;
+      this.current = node;
+    }
+    this.length++;
+  }
+  reverseList(){
+    if(this.head === null){
+      return;
+    }
+    let currentNode = this.head;
+    let newNext = null;
+    let newPrevious = null;
+    while(currentNode !== null){
+      newPrevious = currentNode.next;
+      currentNode.next = newNext;
+      currentNode.previous = newPrevious;
+      newNext = currentNode;
+      currentNode = newPrevious;
+    }
+    this.head = newNext;
+  }
+}
+
+let newList = new LinkedList;
+newList.addNode("item1");
+newList.addNode("item2");
+newList.addNode("item3");
+newList.reverseList(); // item3 -> item2 -> item1

@@ -1,0 +1,74 @@
+I also need to create the code to remove a node once a duplicate is found. I can identify the node to be deleted by its value. I need to save the deleted node's pointer, so it can be the pointer for the previous node.
+
+// remove duplicate function
+
+SET deletedNode to next // in order to increment next
+SET updatedNode to next.previous
+SET updatedNode.next to next.next
+SET newNext to updatedNode.next
+SET newNext.previous to updatedNode
+SET deletedNode to null
+DECREMENT this.length
+SET next to next.next
+
+removeDuplicates(){
+  let current = this.head;
+  let next = this.head.next;
+  while(current !== null && current.next !== null){
+    if(current.value !== next.value && next.next !== null){
+      next = next.next;
+    } else if(current.value === next.value){
+      console.log("Will remove this node:" + next.value);
+      let deletedNode = next;
+      let updatedNode = next.previous;
+      updatedNode.next = next.next;
+      let newNext = updatedNode.next;
+      if(newNext !== null){
+        newNext.previous = updatedNode;
+      }
+      deletedNode = null;
+      this.length--;
+      next = next.next;
+    } else {
+      return "No duplicates found";
+    }
+    current = current.next;
+  }
+}
+
+
+...currently this is only working if the duplicates are right next to each other.
+
+Take two...
+
+
+removeDuplicates(){
+  if(!this.head || !this.head.next){
+    return "No duplicates found - empty or single element linked list";
+  }
+  let current;
+  let next;
+  let nodes = {};
+  current = this.head;
+  next = current.next;
+  nodes[current.value] = true;
+  while(next){
+    let data = next.value;
+    if(nodes[data]){
+      current.next = next.next;
+      this.length--;
+    } else {
+      nodes[data] = true;
+      current = next;
+    }
+    next = next.next;
+  }
+}
+
+
+// standard remove function
+
+FUNCTION deleteNode(value)
+
+
+END FUNCTION
