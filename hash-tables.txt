@@ -1,0 +1,153 @@
+ Hash Tables
+
+ 1. What is a hash table?
+
+ A hash table is a data structure that stores data as key-value pairs in an internal array. The items are given a key as an identifier, which gets converted (or hashed) into a numerical index.
+
+ 2. What is hashing?
+
+ Hashing is the method used to convert string keys first to numerical keys, then to an index location within the hash table's internal array.
+
+ 3. How does a hash table store data?
+
+ A hash table stores data as if they were array items (sometimes called an associative array) by assigning them keys as identifiers, and translating the key to a particular index location.
+
+ 4. How are hash tables and objects different?
+
+ Items in hash tables each need to have their own unique identifier in order to be stored and found. The value of each item may contain object-like data, with name properties and saved values. Objects, however, do not need to have a key identifier, and if they do, the key can be a part of the object data as a property - saving the key as a property is not recommended practice in hash tables.
+
+ 5. Determine whether you would use a hash table or an object to store each of the following pieces of data:
+
+ - A list of pets and their unique names // hash table
+ - The name, age, and the birthday of your best friend // object
+ - The name and location of every company in a given city // hash table
+ - All of the books checked out from a library by a particular individual // hash table
+ - The primary and secondary phone numbers for a contact // object
+
+6. Build a system that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers. Store this information in a hash table.
+
+class CustomerMap {
+  constructor(){
+    this.customers = [];
+    this.databaseSize = 13;
+  }
+  hash(key){
+    let hashCode = 0;
+    for(var i = 0; i < key.length; i++){
+      hashCode += key.charCodeAt(i);
+    }
+    let index = hashCode % this.databaseSize;
+    return index;
+  }
+  addCustomer(name, address, phoneNumber){
+    let index = this.hash(phoneNumber);
+    // checking for collision
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(!this.customers[index + x]){
+        let location = index + x;
+      }
+    }
+    this.customers[location] = {customerName: name, customerAddress: address, customerPhone: phoneNumber};
+  }
+  lookUpCustomer(phoneNumber){
+    let index = this.hash(phoneNumber);
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(this.customers[index + x].customerPhone === phoneNumber){
+        let location = index + x;
+      }
+    }
+    return this.customers[location];
+  }
+}
+
+
+7. Build a system that allows a store owner to track their store's inventory using a hash table for storage.
+
+class InventoryMap {
+  constructor() {
+    this.inventory = [];
+    this.databaseSize = 13;
+  }
+  hash(key){
+    let hashCode = 0;
+    for(var i = 0; i < key.length; i++){
+      hashCode += key.charCodeAt(i);
+    }
+    let index = hashCode % this.databaseSize;
+    return index;
+  }
+  addItem(itemName, itemCount){
+    let index = hash(itemName);
+    // checking for collision
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(!this.inventory[index + x]){
+        let location = index + x;
+      }
+    this.inventory[location] = {item: itemName, quantity: itemCount};
+  }
+  updateCount(itemName, updatedItemCount){
+    let index = hash(itemName);
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(this.inventory[index + x].item === itemName){
+        let location = index + x;
+      }
+    }
+    this.inventory[location] = {item: itemName, quantity: updatedItemCount};
+  }
+  removeItem(itemName){
+    let index = hash(itemName);
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(this.inventory[index + x].item === itemName){
+        let location = index + x;
+      }
+    }
+    this.inventory[location] = null;
+  }
+  checkInventory(itemName){
+    let location = hash(itemName);
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(this.inventory[index + x].item === itemName){
+        let location = index + x;
+      }
+    }
+    return this.inventory[location];
+}
+
+
+8. Build a system that allows digital copies of newspapers to be entered and searched by publisher and publication date. Use hash tables to store the necessary data.
+
+class NewspaperMap {
+  constructor() {
+    this.database = [];
+    this.databaseSize = 13;
+  }
+  hash(key){
+    let hashCode = 0;
+    for(var i = 0; i < key.length; i++){
+      hashCode += key.charCodeAt(i);
+    }
+    let index = hashCode % this.databaseSize;
+    return index;
+  }
+  enterNewspaper(newspaper, publisher, publicationDate){
+    let key = publisher + publicationDate;
+    let index = hash(key);
+    // checking for collision
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(!this.database[index + x]){
+        let location = index + x;
+      }
+    }
+    this.database[location] = {content: newspaper, publisher: publisher, date: publicationDate};
+  }
+  searchDatabase(publisher, publicationDate){
+    let key = publisher + publicationDate;
+    let index = hash(key);
+    for(var x = 0; x < this.databaseSize - index; x++){
+      if(this.database[index + x].publisher === publisher && this.database[index + x].date === publicationDate){
+        let location = index + x;
+      }
+    }
+    return this.database[location];
+  }
+}
