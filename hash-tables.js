@@ -19,7 +19,7 @@ END FUNCTION
 class CustomerMap {
   constructor(){
     this.customers = [];
-    this.databaseSize = 13;
+    this.databaseSize = 47;
   }
   hash(key){
     let hashCode = 0;
@@ -32,29 +32,30 @@ class CustomerMap {
   addCustomer(name, address, phoneNumber){
     let index = this.hash(phoneNumber);
     // checking for collision
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(!this.customers[index + x]){
-        let location = index + x;
-      }
+    while(this.customers[index]){
+      index = index + 1;
     }
-    this.customers[location] = {customerName: name, customerAddress: address, customerPhone: phoneNumber};
+    this.customers[index] = {customerName: name, customerAddress: address, customerPhone: phoneNumber};
   }
   lookUpCustomer(phoneNumber){
     let index = this.hash(phoneNumber);
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(this.customers[index + x].customerPhone === phoneNumber){
-        let location = index + x;
-      }
+    while(this.customers[index].customerPhone !== phoneNumber){
+      index = index + 1;
     }
-    return this.customers[location];
+    return this.customers[index];
   }
 }
 
+// Test Code
+let customerTest = new CustomerMap();
+test.addCustomer("Lindsay Spencer", "25327 Metzler Creek Drive", "2812538164");
+test.addCustomer("Max Spencer", "25327 Metzler Creek Drive", "7138342625");
+test.addCustomer("Paula McGee", "25327 Metzler Creek Drive", "2812536232");
 
 
 // Build a system that allows a store owner to track their store's inventory using a hash table for storage.
 
-// hash is based off of the itemNumber,
+// hash is based off of the itemName
 
 CLASS Inventory
   CREATE InventoryMap
@@ -79,7 +80,7 @@ END CLASS
 class InventoryMap {
   constructor() {
     this.inventory = [];
-    this.databaseSize = 13;
+    this.databaseSize = 47;
   }
   hash(key){
     let hashCode = 0;
@@ -90,44 +91,44 @@ class InventoryMap {
     return index;
   }
   addItem(itemName, itemCount){
-    let index = hash(itemName);
+    let index = this.hash(itemName);
     // checking for collision
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(!this.inventory[index + x]){
-        let location = index + x;
-      }
-    this.inventory[location] = {item: itemName, quantity: itemCount};
+    while(this.inventory[index]){
+      index = index + 1;
+    }
+    this.inventory[index] = {item: itemName, quantity: itemCount};
   }
   updateCount(itemName, updatedItemCount){
-    let index = hash(itemName);
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(this.inventory[index + x].item === itemName){
-        let location = index + x;
-      }
+    let index = this.hash(itemName);
+    // find item
+    while(this.inventory[index].item !== itemName){
+      index = index + 1;
     }
-    this.inventory[location] = {item: itemName, quantity: updatedItemCount};
+    // update info
+    this.inventory[index] = {item: itemName, quantity: updatedItemCount};
   }
   removeItem(itemName){
-    let index = hash(itemName);
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(this.inventory[index + x].item === itemName){
-        let location = index + x;
-      }
+    let index = this.hash(itemName);
+    while(this.inventory[index].item !== itemName){
+      index = index + 1;
     }
-    this.inventory[location] = null;
+    this.inventory[index] = null;
   }
   checkInventory(itemName){
-    let location = hash(itemName);
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(this.inventory[index + x].item === itemName){
-        let location = index + x;
-      }
+    let index = this.hash(itemName);
+    while(this.inventory[index].item !== itemName){
+      index = index + 1;
     }
-    return this.inventory[location];
+    return this.inventory[index];
+  }
 }
 
-let newMap = new InventoryMap();
-newMap.addItem("Whoosit", 3);
+// Test Code
+
+let inventoryTest = new InventoryMap();
+inventoryTest.addItem("Whoosit", "3");
+inventoryTest.addItem("Whatsit", "5");
+inventoryTest.addItem("Thingimabobs", "20");
 
 
 
@@ -142,7 +143,7 @@ END FUNCTION
 class NewspaperMap {
   constructor() {
     this.database = [];
-    this.databaseSize = 13;
+    this.databaseSize = 47;
   }
   hash(key){
     let hashCode = 0;
@@ -154,23 +155,25 @@ class NewspaperMap {
   }
   enterNewspaper(newspaper, publisher, publicationDate){
     let key = publisher + publicationDate;
-    let index = hash(key);
+    let index = this.hash(key);
     // checking for collision
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(!this.database[index + x]){
-        let location = index + x;
-      }
+    while(this.database[index]){
+      index = index + 1;
     }
-    this.database[location] = {content: newspaper, publisher: publisher, date: publicationDate};
+    this.database[index] = {content: newspaper, publisher: publisher, date: publicationDate};
   }
   searchDatabase(publisher, publicationDate){
     let key = publisher + publicationDate;
-    let index = hash(key);
-    for(var x = 0; x < this.databaseSize - index; x++){
-      if(this.database[index + x].publisher === publisher && this.database[index + x].date === publicationDate){
-        let location = index + x;
-      }
+    let index = this.hash(key);
+    while(this.database[index].publisher !== publisher && this.database[index].date !== publicationDate){
+      index = index + 1;
     }
-    return this.database[location];
+    return this.database[index];
   }
 }
+
+// Test Code
+
+let newspaperTest = new NewspaperMap();
+newspaperTest.enterNewspaper("Today, the world changed...", "New York Times", "06/12/1992");
+newspaperTest.enterNewspaper("Santa spotted leaving the North Pole...", "Houston Chronicle", "12/24/2018");
