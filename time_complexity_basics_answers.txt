@@ -29,6 +29,12 @@ factorial: O(n!)
 
 5. Choose one of the algorithmic growth rates from the last question and make a comparison to a real-life situation.
 
+A real-life example of a linear growth rate is a cashier checking out every person in their line at a grocery store. Since the pseudocode would be something like:
+FOR n customers in line
+  Check out customer
+END FOR
+...the number of instructions is n (number of loops) + n (number of checkouts). This equals 2n, which results in a time complexity of O(n). 
+
 
 6. Determine the time complexity of the following snippet of code. It is commonly known as a linear search.
 
