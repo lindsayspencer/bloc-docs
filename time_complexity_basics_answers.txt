@@ -1,0 +1,50 @@
+Time Complexity Answers
+
+1. What is time complexity and what is its relation to algorithms?
+
+Time complexity is the method of calculating the efficiency and runtime of an algorithm.
+
+
+2. What is runtime?
+
+Runtime is used synonymously with time complexity, but it refers to the amount of time it would take for an algorithm to complete its executions.
+
+
+3. How is the runtime of an algorithm calculated?
+
+It is calculated based on the size of the input and the amount of instructions performed.
+
+
+4. Name the six types of algorithm growth rates we saw in this checkpoint and list them in order of most efficient to lease efficient. Now Google another algorithmic growth rate not covered and place it in the correct spot on your list.
+
+// From most efficient to least efficient:
+constant
+logarithmic
+linear
+log-linear
+exponential
+quadratic
+factorial: O(n!)
+
+
+5. Choose one of the algorithmic growth rates from the last question and make a comparison to a real-life situation.
+
+
+6. Determine the time complexity of the following snippet of code. It is commonly known as a linear search.
+
+n + 1 => O(n) // Linear
+
+
+7. Determine the time complexity of the following snippet of code.
+
+n * n + n => O(n^2) // Quadratic
+
+
+8. Determine the time complexity of the following snippet of code. It is commonly known as the Fibonacci sequence.
+
+1 + 1 ^ n => O(2^n) // Exponential
+
+
+9. Out of the code snippets you just saw, which is the most time efficient?
+
+#6 is the most efficient as it is a linear growth rate [O(n)];
