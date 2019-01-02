@@ -1,0 +1,66 @@
+Intro to Algorithms
+
+1. Using proper pseudocode, describe the following primitive algorithms:
+- making coffee
+- washing dishes
+- a choice of your own
+
+// making coffee
+
+FUNCTION makeCoffee(coffeeGrounds)
+  SET coffeeMaker to on
+  SET waitTime to 0 seconds
+  SET coffee to null
+  ADD coffeeGrounds to coffeeMaker
+  WHILE waitTime is LESS THAN 60 seconds
+    INCREMENT waitTime
+  END WHILE
+  SET coffee to ready
+END FUNCTION
+
+
+// washing dishes
+
+FUNCTION washDishes(dirtyDishes)
+  SET cleanDishes to empty array
+  FOR each dish in dirtyDishes
+    SCRUB with sponge AND dishSoap
+    RINSE with water
+    DRY with towel
+    PUSH to cleanDishes
+  END FOR
+  RETURN cleanDishes
+END FUNCTION
+
+
+// My choice: driving to a destination
+
+FUNCTION driveThere(routeStart)
+  SET instruction to routeStart
+  WHILE instruction is not null
+    IF instruction equals turnLeft
+      TURN left
+    ELSE IF instruction equals turnRight
+      TURN right
+    ELSE IF instruction equals goStraight
+      GO straight
+    ELSE
+      PULL over AND RECALL function driveThere
+    SET instruction to instruction.next
+  END WHILE
+  RETURN "You have arrived at your destination."
+END FUNCTION
+
+
+2. Name three companies who created an algorithm that made them successful. What about each of your cases make them stand out?
+
+UPS - their use of routing algorithms saves the company money and time, and makes them more reliable in the eyes of the user.
+
+Tesla - their use of A.I. to develop self-driving cars has pushed innovation in the tech and auto industries.
+
+Uber - their dispatch algorithm for contracting a driver has made transportation more available to more people, as well as increasing available jobs. It is also easy for new users to figure out. 
+
+
+3. Hypothesize about what constitutes an efficient algorithm versus an inefficienct algorithm.
+
+An efficient algorithm would likely take a finite amount of time and memory space, while an inefficient algorithm may take more time by having to search through every item or looping through items multiple times. It may also take more space by making excessive copies of elements or structures.
