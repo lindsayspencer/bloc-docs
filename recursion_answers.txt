@@ -1,0 +1,66 @@
+Recursion Exercises
+
+1. Define and compare recursion and iteration.
+
+Recursion is a function that has a base case and a recursive case in which the function invokes itself. An iterative function is one that uses loops to get through a set of data and saves the changing values to get the final answer. Recursive solutions can become more time consuming, while iterative solutions can become overly complex. Recursive solutions are great at breaking down a complex problem into sub-problems and handling them individually, adding them to the call stack, before then recalling the data for the final solution. Iterative solutions are great at looping through each element in a data set to perform simpler instructions.
+
+
+2. Name five algorithms that are commonly implemented by recursion.
+
+- fibonacci
+- factorials
+- reversing a string
+- quicksort
+- flattening an array
+
+
+3. When should you use recursion, and when should you avoid recursion? Give examples for each.
+
+Recursion should be used when you have a complex problem that can be broken down into smaller repeating sub-steps. Like with the factorial problem - you are executing the same problem over and over, but need to use the answer from each sub-problem to get the final results. It is better to perform all those sub-problems individually, then combine them into a single solution at the end with recursion. Recursion is not as efficient with a simpler problem like finding the maximum number in an array. In this example, we can save one value, and loop through the data once to find our result. It doesn't make sense for it to be broken down into isolated sub-problems because we're really only trying to solve one problem, not add up several sub-solutions.
+
+
+4. Compare the recursive and iterative solutions to the three algorithms from the checkpoint (factorial, maximum, and fibonacci). What is similar, and what is different?
+
+// Factorial
+The recursive solution is much simpler than the iterative solution. Recursion is a better option because we want to break the larger problem down into sub-problems and then add the sub-solutions together at the end. For example, when finding the factorial of 3, we want to perform the calculation of 3 * 2, AND the calculation of 6 * 1. The iterative solution quickly becomes more complex than the recursive solution because it has to save and change the values of both the result and i.
+
+// Maximum
+The iterative solution is better than recursion in this case because it can save the first value, loop through the data set (for each number in the array of numbers), and compare each element to the first value - and the value only needs to be changed if a condition is met, otherwise no change needs to be performed. The recursive solution has to change the array and the value with each callback.
+
+
+// Fibonacci
+With the iterative solution, we have to save and increment two different values, which is easier to implement with recursion, because we can just set the variable equal to the callback. Both solutions seem readable to me, but with the recursive solution you don't have to resave the incremented version, as the callback does the work.  
+
+
+5. Given a multi-dimensional collection (such as an array) where the number of dimensions is unknown, write a recursive algorithm to count the number of items in the entire collection.
+
+function count(array){
+  if(array.length){
+    if(typeof array[0] === "object"){
+      return count(array[0]) + count(array.slice(1));
+    } else {
+      return 1 + count(array.slice(1));
+    }
+  } else {
+    return 0;
+  }
+}
+
+
+6. A palindrome is a word or phrase whose spelling is the same either direction (e.g. racecar). Write a recursive algorithm to determine if a given word or phrase is a palindrome.
+
+function isPalindrome(string) {
+    let stringLength = string.length;
+    if (stringLength === 0 || stringLength === 1) {
+        return true;
+    } else if(string[0] === string[stringLength - 1]){
+      return isPalindrome(string.slice(1, stringLength - 1));
+    } else {
+      return false;
+    }
+}
+
+
+ 7. Google Easter Egg: Google the term "recursion". Google will prompt you with "Did you mean 'recursion'?" Explain why this behavior exhibits properties of recursion.
+
+ Since a recursive function is one that calls itself - when the algorithm to locate the word 'recursion' is run, it calls a link to perform the same search.
