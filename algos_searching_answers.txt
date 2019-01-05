@@ -1,0 +1,77 @@
+Searching Algorithms
+
+1. What is a real-life scenario that uses linear search?
+
+Searching for a person in a line.
+
+
+2. What is a real-life scenario that uses binary search?
+
+Finding a book at a library that uses the Dewey Decimal System.
+
+
+3.  Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using linear search?
+
+A -> B -> C -> D -> E -> F -> G
+It would take 7 iterations.
+
+
+4. Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using binary search?
+
+A (low) -> B -> C -> D (mid) -> E -> F -> G (high)
+G > D
+E (low) -> F (mid) -> G (high)
+G > F
+G (low, mid, high)
+G = G
+It would take 3 iterations.
+
+
+5. Given an unsorted collection of a million items, which algorithm would you choose between linear search and binary search? Explain your reasoning.
+
+I would choose a linear search because the collection is unsorted. The linear search would then only have a time complexity of O(n). With the binary search, you would first have to sort (which could have a time complexity of O(n) depending on which algorithm type), then you would have to search, which would have a time complexity of O(log(n)). Based on this info, a binary search would be better given an unsorted list, but with an unsorted list you have to do n times as much work to first sort, then search (which altogether I believe would result in a time complexity of O(n log n)?)
+
+
+Programming Assignment:
+
+1. You and a friend have set a wager to see who can find the word "Albatross" in the dictionary the fastest. Write a program to allow you to win the bet.
+
+// A dictionary is going to be sorted, so a binary search would be the quickest algorithm.
+
+function winWager(value, dictionary){
+  let low = 0;
+  let high = dictionary.length - 1;
+  while(low <= high){
+    let mid = Math.round((low + high) / 2);
+    if(dictionary[mid] > value){
+      high = mid - 1;
+    } else if(dictionary[mid] < value){
+      low = mid + 1;
+    } else {
+      return mid;
+    }
+  }
+  return "not found";
+}
+
+let dictionary = ["Airfield", "Albatross", "Alert", "American", "Arbitrary", "Ash", "Atlanta"];
+
+winWager("Albatross", dictionary);
+
+
+2. You work at a pet store, and a child has asked you to net the only white-spotted goldfish from the fish tank. Write a program that will help you net the right fish.
+
+// The fish in a fish tank cannot be sorted, so a linear search would be the best choice.
+
+function netFish(fish, tank){
+  for(let i = 0; i < tank.length; i++){
+    if(tank[i] === fish){
+      return fish;
+    }
+  }
+  return "not found";
+}
+
+let tank = ["orange goldfish", "starfish", "zebrafish", "white cloud mountain minnow", "white-spotted goldfish", "orange goldfish", "puffer fish", "zebrafish", "bristlenose catfish", "white cloud mountain minnow", "white cloud mountain minnow"];
+
+netFish("white-spotted goldfish", tank);
