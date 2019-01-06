@@ -1,0 +1,50 @@
+Sorting Algorithms
+
+1. Write pseudocode for bubble sort.
+
+FUNCTION sortBubbleSort(array)
+  FOR an array with n items, loop through it n times
+    SET current to first item in array
+    FOR each item in the array
+      IF current is greater than current + 1 THEN
+        SWAP the items (current stays the same)
+      ELSE IF current is less than or equal to current + 1 THEN
+        SET current to current + 1 (no swap occurs)
+      END IF
+    END FOR
+  END FOR
+  RETURN array
+END FUNCTION
+
+
+2. Write the pseudocode for quick sort.
+
+FUNCTION sortQuickSort(unsortedArray)
+  SET pivot to last item in array
+  FOR each item in array, starting at pivot + 1 and decrementing down to 0
+    IF item is greater than pivot THEN
+      MOVE item to pivot + 1 index
+    END IF
+  END FOR
+  SET smallerItems to items at first index to pivot - 1
+  SET largerItems to items at pivot + 1 to last index
+  SET sortedArray to smallerItems + pivot + largerItems
+  IF smallerItems && largerItems lengths are equal to 1
+    return sortedArray
+  ELSE
+  SET smallerItems to CALLBACK sortQuickSort(smallerItems) RETURNING smallerItems
+  SET largerItems to CALLBACK sortQuickSort(largerItems) RETURNING largerItems
+  RETURN sortedArray
+END FUNCTION
+
+
+3. We talked about time complexity in a previous checkpoint, and how to get an idea of the efficiency of an algorithm. After looking at the pseudocode for the above sorting methods, identify why merge sort and quick sort are much more efficient than the others. Walking through each algorithm with a few sample collections may help.
+
+
+Merge and Quick sort are more efficient because they break up the data and deal with it in smaller chunks. This is especially evidenced by the fact that they both commonly use recursion in their solutions - and recursion breaks down a larger problem into smaller, more efficient ones. In terms of time complexity, both Merge and Quick sort can be represented as O(n log(n)) because they halve the data at each callback. Other algorithms iterate through the entire collection n times, and on each loop performing the same instructions n times. This n * n amount of instructions results in a time complexity of O(n^2), which is less efficient than O(n log(n)).
+
+
+4. All of the sorts addressed in this checkpoint are known as comparison sorts. Research bucket sort and explain how it works. What is the ideal input for bucket sort?
+
+The bucket sort seems to work similar to a hash table in that it creates buckets to sort each element into. This is called a distribution style sort; and after completing this step, the algorithm performs a comparison style sort to put the buckets into order.
+The ideal input is an array of integers because the integers can be used as their index location in the array of buckets. For this reason, it is also ideal if there are not duplicated elements.
