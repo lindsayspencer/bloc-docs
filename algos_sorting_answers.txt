@@ -30,11 +30,12 @@ FUNCTION sortQuickSort(unsortedArray)
   SET largerItems to items at pivot + 1 to last index
   SET sortedArray to smallerItems + pivot + largerItems
   IF smallerItems && largerItems lengths are equal to 1
-    return sortedArray
+    RETURN sortedArray
   ELSE
-  SET smallerItems to CALLBACK sortQuickSort(smallerItems) RETURNING smallerItems
-  SET largerItems to CALLBACK sortQuickSort(largerItems) RETURNING largerItems
-  RETURN sortedArray
+    SET smallerItems to CALLBACK sortQuickSort(smallerItems) RETURNING smallerItems
+    SET largerItems to CALLBACK sortQuickSort(largerItems) RETURNING largerItems
+    RETURN sortedArray
+  END IF
 END FUNCTION
 
 
